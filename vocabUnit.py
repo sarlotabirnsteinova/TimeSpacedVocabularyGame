@@ -10,8 +10,8 @@ class VocabUnit:
         self.target = target
         self.timeInfo = timeInfo
         self.counter = counter
-        self.native_long = None
-        self.target_long = None
+        self.native_long = native_long
+        self.target_long = target_long
         
         self.noun, self.noun_core = self.is_noun()
         
@@ -35,8 +35,8 @@ class VocabUnit:
         elif ddays >= 60 and self.counter<=3:
             return True
         else:
-            # return False
-            return True   # only for testing
+            return False
+            # return True   # only for testing
     
     # change dateInfo & counter if tested
     def change_after_testing(self,newTimeInfo,newCounter):
@@ -64,24 +64,22 @@ class VocabUnit:
         - return if input correct or not 
         """
         translation = False
-        new_counter = 0
+        new_counter = self.counter
         
         if self.target_long is None:
             if inputString == self.target:
-                translation, new_counter = True, 1
+                translation, new_counter = True, new_counter + 1
             elif self.noun and inputString.split()[1] == self.noun_core:
-                translation, new_counter = True, 0
+                translation, new_counter = True, new_counter
             else:
-                translation, new_counter = False, None
+                translation, new_counter = False, 0
         else:
             if inputString == self.target_long:
-                translation, new_counter = True, 1
+                translation, new_counter = True, new_counter + 1
             elif inputString in self.target_long:
-                translation, new_counter = True, 0
-            elif inputString == self.target_long:
-                translation, new_counter = True, 1 
+                translation, new_counter = True, new_counter 
             elif self.noun and inputString.split()[1] == self.noun_core:
-                translation, new_counter = True, 0
+                translation, new_counter = True, new_counter 
             else:
                 translation, new_counter = False, 0
                 

@@ -2,6 +2,7 @@ from vocabUnit import VocabUnit
 import datetime
 import pickle
 import random
+import os
 
 class VocabTest:
     """
@@ -13,17 +14,32 @@ class VocabTest:
         #
         self.vocabUnitsList = None  # list of VocabUnits
         self.vocabTest_idx = []
-        self.tested_count = 0
+        self.tested_count = 0 # make as currentVocabUnit
         
         # make list of VocabUnits
         if self.fname is not None:
-            # load existing project w/ VocabUnits
-            self.read_VocabUnitsList()
+            # make new if does not exist
+            if not os.path.isfile(self.fname):
+                self.vocabUnitsList = []
+                print(f"New filename for VocabTest ")
+            else:
+                # load existing project w/ VocabUnits
+                self.read_VocabUnitsList()
+                print(f"VocabTest read from previously saved file: {self.fname}, number of words {len(self.vocabUnitsList)}")
         else:
             self.fname =  f"VocabUnits{self.dateToday}"
             self.vocabUnitsList = []
-        
-        
+        # prepare to make test
+        self.find_test_idxs()
+        self.randomize_idx()
+        # set firts expression to be tested
+        self.currentVocabUnit = None
+        if len(self.vocabTest_idx) > 0:
+            self.currentVocabUnit = self.vocabUnitsList[ self.vocabTest_idx.pop() ]
+            print(f"Test {self.fname} is ready!")
+        else:
+            print(f"No expressions to be tested in {self.fname}.")
+
         
     def read_VocabUnitsList(self):
         """
@@ -38,7 +54,7 @@ class VocabTest:
         """
         with open(self.fname, 'wb') as config_file:
             pickle.dump(self.vocabUnitsList,config_file)
-            print(f"The List of VocabUnits was saved to pickle file: {self.fname}")
+            print(f"The List of VocabUnits was saved to pickle file: {self.fname}, number of words {len(self.vocabUnitsList)}")
     
     def add_VocabUnit(self,native,target,native_long=None,target_long=None):
         """
@@ -65,13 +81,19 @@ class VocabTest:
         random.shuffle(self.vocabTest_idx)
     
     # pass VocabUnit to test
-    def give_VocabUnit(self):
+    def give_correct_answer(self):
         """
-        return VocabUnit to test.
+        return correct translation of VocabUnit to be currently tested
         """
-        test_idx_current = self.vocabTest_idx[self.tested_count]
-        return self.vocabUnitsList[test_idx_current]
-    
+        if len(self.vocabTest_idx) > 0:
+            str_target = self.currentVocabUnit.target
+            str_target_long = self.currentVocabUnit.target_long
+            if str_target_long is not None:
+                return f"<{str_target}>\n<{str_target_long}>"
+            return f"{str_target}"
+        else:
+            return "Out of expressions to test. Try new VocabTest."
+
     # process input and VocabUnit in testing & return if correct/incorrect
     def process_test(self,inputString):
         """
@@ -79,13 +101,12 @@ class VocabTest:
 
         - return if correct or incorrect
         """
-        test_idx_current = self.vocabTest_idx[self.tested_count]
-
-        correct = self.vocabUnitsList[test_idx_current].compare_with_target(inputString)
-    
-        self.tested_count += 1   # here of in process_test function 
-        
-        return correct
-    
-    
-    # smaller def to change VocabUnit properies under given index --> not needed anymore
+        if len(self.vocabTest_idx) > 0:
+            # check translation
+            translation_status = self.currentVocabUnit.compare_with_target(inputString)    
+            # set a new current test expression
+            self.currentVocabUnit = self.vocabUnitsList[ self.vocabTest_idx.pop() ]
+            return translation_status
+        else:
+            self.currentVocabUnit = None
+            return None
