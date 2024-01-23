@@ -8,5 +8,9 @@ There are two different versions of this game, one is meant for learning and the
 It is meant for adding new vocabulary to your flashcard deck.
 
 ## Testing vocabulary
-It will test vocabulary from your deck according to your previous performance and the time since the last testing. 
-In the case of correct answers while testing, one flashcard appears the day of testing, the next day, after two weeks, after a month, and the last time after three months, after which the expression is considered learned.  
+It will test vocabulary from your deck according to your previous performance and the time passed since the last testing. 
+In the case of correct answers while testing, given flashcard appears the day of testing, the next day, after two weeks, after a month, and the last time after three months, after which the expression is considered learned.
+
+## 
+Here we show a simple schema for files included in this project.  
+![plot](tsvg_intro_img.jpg)
