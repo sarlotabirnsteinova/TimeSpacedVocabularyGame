@@ -65,24 +65,40 @@ class VocabUnit:
         """
         translation = False
         new_counter = self.counter
-        
-        if self.target_long is None:
+        if len(inputString)==0:
+            translation, new_counter = False, 0 
+        elif self.target_long is None:
             if inputString == self.target:
                 translation, new_counter = True, new_counter + 1
-            elif self.noun and inputString.split()[1] == self.noun_core:
-                translation, new_counter = True, new_counter
+            elif self.noun:
+                translation, new_counter = self.compare_status_nouns(inputString)
             else:
                 translation, new_counter = False, 0
         else:
             if inputString == self.target_long:
                 translation, new_counter = True, new_counter + 1
+            elif inputString == self.target:
+                translation, new_counter = True, new_counter + 1
             elif inputString in self.target_long:
                 translation, new_counter = True, new_counter 
-            elif self.noun and inputString.split()[1] == self.noun_core:
-                translation, new_counter = True, new_counter 
+            elif self.noun:
+                translation, new_counter = self.compare_status_nouns(inputString) 
             else:
                 translation, new_counter = False, 0
-                
+        print(f'vocabUnit: {translation}, new counter: {new_counter}')        
         self.change_after_testing(datetime.date.today(), new_counter)
         return translation
+    
+        # compare input with VocabUnit target strings:
+    def compare_status_nouns(self,inputString):
+        """
+        Compare nouns: inputString with target translation.
+        
+        - return status for translation and new_counter 
+        """
+        if len(inputString)==2:
+            inputString.split()[1] == self.noun_core
+            return True, self.counter
+        else:
+            return False, 0
 
