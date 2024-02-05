@@ -1,8 +1,7 @@
 # TimeSpacedVocabularyGame
 Game for testing vocabulary in your target language.
 
-It is a flashcard-style of testing, with an extra feature of flashcards appearing with decreasing frequency (see [Forgetting curve]
-(https://en.wikipedia.org/wiki/Forgetting_curve)).
+It is a flashcard-style of testing, with an extra feature of flashcards appearing with decreasing frequency (see [Forgetting curve](https://en.wikipedia.org/wiki/Forgetting_curve)).
 
 There are two different versions of this game, one is meant for learning and the other for testing vocabulary.
 
