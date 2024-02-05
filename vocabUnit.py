@@ -25,14 +25,14 @@ class VocabUnit:
         """
         dt = dateToday - self.timeInfo
         ddays = dt.days
-        if ddays >= 1 and self.counter==0:
+        if ddays >= 0 and self.counter==0:
             # to be tested at dateToday
             return True
-        elif ddays >= 14 and self.counter<=1:
+        elif ddays >= 7 and self.counter<=1:
             return True
         elif ddays >= 30 and self.counter<=2:
             return True
-        elif ddays >= 60 and self.counter<=3:
+        elif ddays >= 90 and self.counter<=3:
             return True
         else:
             return False
