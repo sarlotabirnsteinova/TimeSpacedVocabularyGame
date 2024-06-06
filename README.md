@@ -18,10 +18,10 @@ Here I will add more detailed description on how to use this game. A simple sche
 
 
 ### Creating a flash card deck:
-1. One need to run 'learnVocabulary.py', pick file name, and press 'loadVocabTest' to loading existing deck or create new one.
-2. Next steps are writing prompts in native and target language. Native language fields will be used as prompts for your answers in target language. Both native and target group consist of two fields. Top one can be single word, or an expression. This will need to be a perfectly match with an answer in order to be correct. Native and target 'example sentence' are not mandatory fields. 
+1. One needs to run 'learnVocabulary.py', pick a file name, and press 'loadVocabTest' to loading existing deck or create new one.
+2. Next steps are writing prompts in native and target language. Native language fields will be used as prompts for your answers in target language. Both native and target group consist of two fields. Top one can be single word, or an expression. This will need to be a perfect match with an answer in order to be correct. Native and target 'example sentence' are not mandatory fields. 
 3. Step 2. is repeated for however many expressions. After adding new vocabulary press 'Save Game' button to save. 
-4. To Exit this window one can press 'Exit Game'.  
+4. To Exit this window one can press 'Exit Game', or simply close the window.  
 
 ### For testing from flash cards:
 5. Run 'testVocab.py' file. Enter the filename of deck you want to be tested on and press 'Load VocabTest' button.Information about the number of flashcards will be displayed in the terminal.
